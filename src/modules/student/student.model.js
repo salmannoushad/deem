@@ -2,7 +2,7 @@ const path = require("path");
 const sequelize = require(path.join(process.cwd(), '/src/config/lib/sequelize'));
 const { DataTypes } = require("sequelize");
 
-const User = sequelize.define("users", {
+const Student = sequelize.define("students", {
     id:{
         allowNull: false,
         primaryKey: true,
@@ -10,20 +10,18 @@ const User = sequelize.define("users", {
         defaultValue: DataTypes.UUIDV4
 
     },
-    email:{
-        type: DataTypes.STRING
+    roll:{
+        type: DataTypes.STRING,
+        unique: true
     },
-    password:{
-        type: DataTypes.STRING
-    },
-    username:{
+    name:{
         type: DataTypes.STRING
     }
 }, {
-    tableName: "users",
+    tableName: "students",
     timestamps: false,
     createdAt: 'created_at',
     updatedAt: "updated_at"
 })
 
-module.exports = User;
+module.exports = Student;
