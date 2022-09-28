@@ -16,6 +16,9 @@ const User = sequelize.define("users", {
     password:{
         type: DataTypes.STRING
     },
+    confirmPassword:{
+        type: DataTypes.STRING
+    },
     username:{
         type: DataTypes.STRING
     }

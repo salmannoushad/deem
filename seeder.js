@@ -1,7 +1,7 @@
 const path = require("path");
 
 function init() {
-    const sequelize = require(path.join(process.cwd(), "/src/config/sequelize.js"))
+    const sequelize = require(path.join(process.cwd(), "/src/config/lib/sequelize.js"))
 
     sequelize.query('CREATE DATABASE IF NOT EXISTS blog')
     .then(() => {
