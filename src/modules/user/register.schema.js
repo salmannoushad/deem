@@ -13,5 +13,5 @@ const registerSchema = object().shape({
         .required("This field must not be empty."),  
 });
 
-module.exports = registerSchema;
+module.exports.registerSchema = registerSchema;
 

@@ -1,45 +1,19 @@
 const jwt = require('jsonwebtoken');
 const User = require('./user.model');
-const registerSchema = require('./register.schema');
 
-const checkIfUserExists = async function (mail) {
+async function signUp (req, res, next) {
     try{
-        const record = await User.findOne({ where: { email: mail }})
-        return record;
-    }
-    catch(err) {
-        console.log(err);
-    }
-}
-
-async function signUp (req,res) {
-    try{
-        const { username, email, password, confirmPassword } = req.body;
-        try {
-            await registerSchema.validate({ email, password, confirmPassword },{ abortEarly: false });  
-        }catch(err) {
-            const errors = [];
-
-            err.inner.forEach((e) => {
-                errors.push({ path: e.path, message: e.message })
-            })
-            return res.status(400).send(errors);
-        }
+        const { username, email, password } = req.body;
         
-            const newUser = {
-                username,
-                email,
-                password,
-                confirmPassword
-            }
+        const [user, created] = await User.findOrCreate({
+            where: { email },
+            defaults: { username, email, password }
+        })
 
-            if (await checkIfUserExists(newUser.email)) {
-            return res.status(200).send("User is already exists")
+        if (!created) {
+            return res.status(409).send("User already exists")
         }
-
-            const user = await User.create(newUser);
-            res.status(201).send(user);         
-            
+        res.status(201).send(user);                      
     }
     catch(err) {
         console.log(err);
@@ -107,7 +81,6 @@ async function login (req,res) {
         .then(success)
         .catch(error)
 };
-
 
 const update = async function(req,res) {
     try {
