@@ -13,9 +13,10 @@ function init() {
 
     const user = require(path.join(process.cwd(), '/src/modules/user/user.model.js'))
     const student = require(path.join(process.cwd(), '/src/modules/student/student.model.js'))
+    const permission = require(path.join(process.cwd(), '/src/modules/permission/permission.model.js'))
     
     sequelize.sync()
-    .then(() => console.log("success"))
+    .then(() => console.log("success")) 
     .catch((err) => console.log(err))
 }
 
